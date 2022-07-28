@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useLinkClickHandler, useResolvedPath } from 'react-router-dom'
+import { RepoCard } from '../components/ReposCard'
 import { useDebounce } from '../hooks/debounce'
 import {
   useLazyGetUserReposQuery,
@@ -25,7 +26,8 @@ export function HomePage() {
   }, [debounced, users])
 
   const ClickHandler = (username: string) => {
-    console.log(fetchRepos(username))
+    fetchRepos(username)
+    setDropdown(false)
   }
 
   return (
@@ -58,7 +60,7 @@ export function HomePage() {
         <div className="container">
           {areReposLoading && <p>Repos are loading...</p>}
           {repos?.map((repo) => (
-            <p>{repo.url}</p>
+            <RepoCard repo={repo} key={repo.id} />
           ))}
         </div>
       </div>
